@@ -33,7 +33,7 @@ class MLDriverEnvironment(BaseEnv):
     def step(self, action):
 
         skip_frames_count = 0
-        
+
         while(skip_frames_count < self.skip):
             step_info = self.env.step([[action]])
             info = step_info[self.default_brain]
