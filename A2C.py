@@ -16,7 +16,7 @@ class A2C:
 
     def train(self):
         env = A2C.make_all_environments(self.args.num_envs, self.env_class, self.args.env_name,
-                                        self.args.env_seed)
+                                        self.args.env_seed, args=self.args)
 
         print("\n\nBuilding the model...")
         self.model.build(env.observation_space.shape, env.action_space.n)
@@ -51,7 +51,7 @@ class A2C:
             exit(1)
 
         env = self.make_all_environments(num_envs=1, env_class=self.env_class, env_name=self.args.env_name,
-                                         seed=self.args.env_seed)
+                                         seed=self.args.env_seed, args=self.args)
 
         self.model.build(observation_space_shape, action_space_n)
 
@@ -86,18 +86,18 @@ class A2C:
 
     # The reason behind this design pattern is to pass the function handler when required after serialization.
     @staticmethod
-    def __env_maker(env_class, env_name, i, seed):
+    def __env_maker(env_class, env_name, i, seed, args):
         def __make_env():
-            return env_class(env_name, i, seed)
+            return env_class(env_name, i, seed, args)
 
         return __make_env
 
     @staticmethod
-    def make_all_environments(num_envs=4, env_class=None, env_name="SpaceInvaders", seed=42):
+    def make_all_environments(num_envs=4, env_class=None, env_name="SpaceInvaders", seed=42, args=None):
         set_all_global_seeds(seed)
 
         return SubprocVecEnv(
-            [A2C.__env_maker(env_class, env_name, i, seed) for i in range(num_envs)])
+            [A2C.__env_maker(env_class, env_name, i, seed, args) for i in range(num_envs)])
 
     @staticmethod
     def env_name_parser(env_name):

@@ -8,7 +8,7 @@ import moviepy.editor as mpy
 
 
 class MLDriverEnvironment(BaseEnv):
-    def __init__(self, env_name, id, seed):
+    def __init__(self, env_name, id, seed, args):
         super().__init__(env_name, id)
         self.env = None
         self.default_brain = 'Brain_learning'
@@ -20,6 +20,8 @@ class MLDriverEnvironment(BaseEnv):
         self.best_run_frames = []
         self.best_run_score = 0
         self.gif_created = False
+        self.args = args
+        print(self.args)
 
     def make(self):
         env_provider = UnityEnvironmentProvider(
@@ -96,5 +98,6 @@ class MLDriverEnvironment(BaseEnv):
 
     def save_image(self):
         clip = mpy.ImageSequenceClip(self.best_run_frames, fps=30)
-        filename = 'records/score_{0}.gif'.format(self.best_run_score)
+        filename = '{0}/score_{1}.gif'.format(
+            self.args['experiment_dir'], self.best_run_score)
         clip.write_gif(filename, verbose=True)
