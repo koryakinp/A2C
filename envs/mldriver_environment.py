@@ -9,8 +9,7 @@ import moviepy.editor as mpy
 
 class MLDriverEnvironment(BaseEnv):
     def __init__(self, env_name, id, seed):
-        self.env_name = env_name
-        self.rank = id
+        super().__init__(env_name, id)
         self.env = None
         self.default_brain = 'Brain_learning'
         self.make()
@@ -49,7 +48,6 @@ class MLDriverEnvironment(BaseEnv):
                 print(len(self.best_run_frames))
 
         if is_done:
-            print("Is Done")
             self.summaries_dict['reward'] = sum(self.rewards)
             self.summaries_dict['episode_length'] = len(self.rewards)
 

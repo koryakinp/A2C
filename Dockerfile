@@ -15,6 +15,7 @@ WORKDIR /python-env/A2C
 
 RUN wget https://github.com/koryakinp/MLDriver/releases/download/5.4/MLDriver_Linux_x86_64.zip
 RUN mkdir environments
+RUN mkdir experiments
 RUN mkdir records
 RUN unzip MLDriver_Linux_x86_64.zip -d environments/
 RUN rm MLDriver_Linux_x86_64.zip
