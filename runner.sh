@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /python-env/mldriver-discrete-steering
+cd /python-env/A2C
 
 while getopts ":c:e:" opt; do
   case $opt in
