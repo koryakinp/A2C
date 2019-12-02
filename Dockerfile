@@ -23,3 +23,4 @@ RUN rm -rf /python-env/mldriver-discrete-steering/environments/__MACOSX
 RUN chmod 755 runner.sh
 
 ENTRYPOINT [ "./runner.sh" ]
+CMD ["-c mldriver.json"]
