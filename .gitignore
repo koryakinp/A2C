@@ -106,3 +106,5 @@ ENV/
 .idea/
 .pyc
 experiments/
+environments/
+records/

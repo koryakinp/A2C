@@ -1,0 +1,17 @@
+{
+  "num_envs": 1,
+  "env_class": "MLDriverEnvironment",
+  "env_name": "MLDriverEnvironment",
+  "env_seed": 42,
+  "policy_class": "CNNPolicy",
+  "unroll_time_steps": 3,
+  "num_stack": 20,
+  "num_iterations": 4e6,
+  "learning_rate": 7e-4,
+  "reward_discount_factor": 0.99,
+  "max_to_keep": 4,
+  "experiment_dir": "mldriver_experiment",
+  "record_video_every": -1,
+  "to_train": true,
+  "to_test": true
+}

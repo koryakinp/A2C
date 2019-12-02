@@ -1,5 +1,6 @@
 import numpy as np
 from multiprocessing import Process, Pipe
+import multiprocessing as mp
 
 
 # This class is to run multiple environments at the same time.

@@ -101,8 +101,8 @@ class A2C:
 
     @staticmethod
     def env_name_parser(env_name):
-        from envs.gym_env import GymEnv
-        envs_to_class = {'GymEnv': GymEnv}
+        from envs.mldriver_environment import MLDriverEnvironment
+        envs_to_class = {'MLDriverEnvironment': MLDriverEnvironment}
 
         if env_name in envs_to_class:
             return envs_to_class[env_name]
