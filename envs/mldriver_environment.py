@@ -14,13 +14,13 @@ class MLDriverEnvironment(BaseEnv):
         self.default_brain = 'Brain_learning'
         self.make()
         self.seed = seed
-        self.skip = 5
         self.rewards = []
         self.summaries_dict = {'reward': 0, 'episode_length': 0}
         self.best_run_frames = []
         self.best_run_score = 0
         self.gif_created = False
         self.args = args
+        self.skip = self.args['frames_skip']
         print(self.args)
 
     def make(self):

@@ -13,5 +13,6 @@
   "experiment_dir": "experiment1",
   "record_video_every": -1,
   "to_train": true,
-  "to_test": true
+  "to_test": true,
+  "frames_skip": 5
 }
