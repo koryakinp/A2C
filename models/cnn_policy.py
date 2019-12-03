@@ -10,9 +10,9 @@ class CNNPolicy(BasePolicy):
         super().__init__(sess, reuse)
         self.initial_state = []
         with tf.name_scope(name + "policy_input"):
-            self.X_input = tf.placeholder(tf.uint8, input_shape)
+            self.X_input = tf.placeholder(tf.float32, input_shape)
         with tf.variable_scope("policy", reuse=reuse):
-            conv1 = conv2d('conv1', tf.cast(self.X_input, tf.float32) / 255., num_filters=32, kernel_size=(8, 8),
+            conv1 = conv2d('conv1', self.X_input, num_filters=32, kernel_size=(8, 8),
                            padding='VALID', stride=(4, 4),
                            initializer=orthogonal_initializer(np.sqrt(2)), activation=tf.nn.relu,
                            is_training=is_training)
@@ -27,13 +27,19 @@ class CNNPolicy(BasePolicy):
 
             conv3_flattened = flatten(conv3)
 
-            fc4 = dense('fc4', conv3_flattened, output_dim=512, initializer=orthogonal_initializer(np.sqrt(2)),
+            fc4 = dense('fc4', conv3_flattened, output_dim=1024, initializer=orthogonal_initializer(np.sqrt(2)),
                         activation=tf.nn.relu, is_training=is_training)
 
-            self.policy_logits = dense('policy_logits', fc4, output_dim=num_actions,
+            fc5 = dense('fc5', fc4, output_dim=512, initializer=orthogonal_initializer(np.sqrt(2)),
+                        activation=tf.nn.relu, is_training=is_training)
+
+            fc6 = dense('fc6', fc5, output_dim=256, initializer=orthogonal_initializer(np.sqrt(2)),
+                        activation=tf.nn.relu, is_training=is_training)
+
+            self.policy_logits = dense('policy_logits', fc6, output_dim=num_actions,
                                        initializer=orthogonal_initializer(np.sqrt(1.0)), is_training=is_training)
 
-            self.value_function = dense('value_function', fc4, output_dim=1,
+            self.value_function = dense('value_function', fc6, output_dim=1,
                                         initializer=orthogonal_initializer(np.sqrt(1.0)), is_training=is_training)
 
             with tf.name_scope('value'):
