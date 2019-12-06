@@ -5,6 +5,7 @@ from envs.base_env import BaseEnv
 from gym import spaces, Wrapper, wrappers
 import tempfile
 import moviepy.editor as mpy
+from skimage.transform import resize
 
 
 class MLDriverEnvironment(BaseEnv):
@@ -39,6 +40,8 @@ class MLDriverEnvironment(BaseEnv):
             info = step_info[self.default_brain]
             r = info.rewards[0]
             s = info.visual_observations[0][0]
+            ss = resize(s, (64, 64))
+
             is_done = info.local_done[0]
             frame = s * 255
             frame = frame.astype(int)
@@ -55,7 +58,7 @@ class MLDriverEnvironment(BaseEnv):
 
         info = self.summaries_dict
 
-        return s, r, is_done, info
+        return ss, r, is_done, info
 
     def reset(self):
 
@@ -79,6 +82,7 @@ class MLDriverEnvironment(BaseEnv):
         info = self.env.reset(
             train_mode=True, config=config)[self.default_brain]
         s = info.visual_observations[0][0]
+        s = resize(s, (64, 64))
 
         return s
 
